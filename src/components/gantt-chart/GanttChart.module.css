@@ -1,0 +1,70 @@
+.ganttContainer {
+  width: 100%;
+  height: initial;
+  padding: 1rem;
+}
+
+.ganttHeader {
+  display: flex;
+  height: 60px;
+  align-items: center;
+  padding: 0 1rem;
+  background-color: rgb(237, 237, 237);
+}
+
+.filters {
+  width: 20%;
+  height: 100%;
+  padding: 1rem;
+  background-color: rgb(239, 211, 183);
+}
+
+.months {
+  display: flex;
+  align-items: center;
+}
+
+.ganttData {
+  width: 100%;
+}
+
+.sprint {
+  width: 100%;
+  padding: 1rem;
+  background-color: antiquewhite;
+}
+
+.milestone {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  margin-bottom: 1rem;
+}
+
+.milestoneDetails {
+  width: 20%;
+  height: 100%;
+  background-color: rgb(247, 216, 175);
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.milestoneGraph {
+  width: 80%;
+  position: relative;
+  color: #fff;
+  padding: 1rem;
+  background-color: rgb(165, 244, 244);
+  border: 1px solid black;
+  height: 100%;
+}
+
+.milestoneSegment {
+  position: absolute;
+  height: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
