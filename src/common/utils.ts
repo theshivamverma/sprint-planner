@@ -1,6 +1,7 @@
 import { monthNames } from "./constant";
 import { Milestone, Sprint } from "./types";
 
+// returns month index and name between startMonth-index and endMonth-index
 export const getMonthsArray = (startIndex: number, endIndex: number) => {
   let result = [];
   for (let i = startIndex; i <= endIndex; i++) {
@@ -9,6 +10,7 @@ export const getMonthsArray = (startIndex: number, endIndex: number) => {
   return result;
 };
 
+// calculate width of a sprint based on sprint startDate,sprint endDate and scale
 export const calculateWidth = (
   startDate: Date,
   endDate: Date,
@@ -18,6 +20,7 @@ export const calculateWidth = (
   return result > 0 ? result : 10;
 };
 
+// position of sprint bar based on sprint startDate and graph startDate
 export const calculateOffset = (
   milestoneStartDate: string,
   startDate: Date,
@@ -29,19 +32,7 @@ export const calculateOffset = (
   );
 };
 
-export const pickColorBasedOnPriority = (priority: string): string => {
-  switch (priority) {
-    case "High":
-      return "red";
-    case "Medium":
-      return "yellow";
-    case "Low":
-      return "green";
-    default:
-      return "gray";
-  }
-};
-
+// returns totalWidth of the sprint bar baed on first month and last month among all the sprints
 export const getTotalWidth = (
   startIndex: number,
   endIndex: number,
@@ -59,21 +50,33 @@ export const getTotalWidth = (
   return result;
 };
 
+
+// return a list of values being used inside the gantt chart
 export const getGanttChartDetails = (sprintData: Sprint[]) => {
+  // start date of first sprint
   let startDate = new Date(sprintData[0]?.startDate);
   let startMonth = startDate.getMonth();
   let startYear = startDate.getFullYear();
+
+  // set graph start date to 1st of the month
   startDate = new Date(startYear, startMonth, 1);
 
+  // end date of last sprint
   let endDate = new Date(sprintData[sprintData.length - 1]?.endDate);
   let endMonth = endDate.getMonth();
   let endYear = endDate.getFullYear();
+
+  // set end date to last day of the ending month
   endDate = new Date(endYear, endMonth + 1, 0);
 
+  // calculate total time between the start date and end date
   let totalTime = endDate.getTime() - startDate.getTime();
 
+  // generate scale based on total time and width allocated to the graph
+  // total-screen-width - padding * percent based on UI
   let timeUnitWidth = (0.8 * (window.innerWidth - 64)) / totalTime;
 
+  // width of the graph
   const totalWidth = getTotalWidth(
     startMonth,
     endMonth,
@@ -93,6 +96,7 @@ export const getGanttChartDetails = (sprintData: Sprint[]) => {
   }
 };
 
+// get details of each sprint, completion-percent, any task overflowing
 export const getSprintDetails = (sprint: Milestone) => {
   const sprintEndDate = new Date(sprint.endDate);
   let completedTasks = 0;
@@ -115,6 +119,7 @@ export const getSprintDetails = (sprint: Milestone) => {
   return {isSprintOverflowing, sprintCompletedPercent, overflowingTasksPercent};
 }
 
+// filtered sprints based on searchText
 export const searchMilestones = (sprintData: Sprint[], searchString: string) => {
   const matchingMilestones = [];
 
@@ -129,6 +134,7 @@ export const searchMilestones = (sprintData: Sprint[], searchString: string) => 
   return matchingMilestones;
 }
 
+// get sprints out of JSON data
 export const getSprints = (sprintData: Sprint[]) => {
   const milestones = [];
 
